@@ -16,10 +16,10 @@ function editar() {
 </script>
 
 <template>
-    <slot :onClick="() => show = true" name="activator" />
+    <slot :open="() => show = true" name="activator" />
 
     <b-modal v-model="show" :title="title" size="xl" hide-header-close>
-        <b-form-textarea no-resize autofocus v-model="message" placeholder="No que você está pensando?" />
+        <b-form-textarea no-resize autofocus v-model="message" />
 
         <template #footer>
             <b-button variant="danger" @click="show = false">

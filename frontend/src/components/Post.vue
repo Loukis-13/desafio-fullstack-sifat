@@ -2,6 +2,7 @@
 import { capitalize } from 'vue';
 import { usePostsStore } from '../stores/posts'
 import PostModal from './PostModal.vue';
+import Confirm from './Confirm.vue';
 
 const posts = usePostsStore()
 
@@ -9,10 +10,6 @@ defineProps(['post', 'username'])
 
 function data(d) {
     return new Date(d).toLocaleDateString('pt-br', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-}
-
-function confirmarExcluir(url) {
-    if (confirm("Tem certeza?")) posts.deletePost(url)
 }
 </script>
 
@@ -26,11 +23,15 @@ function confirmarExcluir(url) {
                 </div>
                 <b-dropdown v-if="post.username == username" right text="Menu">
                     <post-modal title="Editar" :message="post.message" :url="post.url">
-                        <template v-slot:activator="{ onClick }">
-                            <b-dropdown-item @click="onClick"> Editar </b-dropdown-item>
+                        <template v-slot:activator="{ open }">
+                            <b-dropdown-item @click="open"> Editar </b-dropdown-item>
                         </template>
                     </post-modal>
-                    <b-dropdown-item @click="confirmarExcluir(post.url)">Excluir</b-dropdown-item>
+                    <confirm @event.once="(url) => posts.deletePost(url)" :arg="post.url">
+                        <template v-slot:activator="{ open }">
+                            <b-dropdown-item @click="open"> Excluir </b-dropdown-item>
+                        </template>
+                    </confirm>
                 </b-dropdown>
             </div>
         </template>

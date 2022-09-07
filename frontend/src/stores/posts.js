@@ -8,6 +8,7 @@ export const usePostsStore = defineStore('posts', () => {
     const auth = useAuthStore()
 
     let posts = ref({})
+    let currentPage = ref(baseUrl+'posts/')
 
     
     function getHeaders() {
@@ -24,7 +25,8 @@ export const usePostsStore = defineStore('posts', () => {
     }
 
     async function getPosts(url) {
-        posts.value = await (await axios.get(url || (baseUrl + 'posts/'))).data
+        if (url) currentPage.value = url
+        posts.value = await (await axios.get(currentPage.value)).data
     }
 
     async function postPost(message) {
