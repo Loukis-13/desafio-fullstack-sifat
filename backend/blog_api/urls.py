@@ -10,7 +10,7 @@ router.register(r'users', views.UserViewSet)
 router.register(r'posts', views.PostingViewSet)
 
 urlpatterns = [
-    path('users/register/', views.UserCreateAPIView.as_view()),
+    # path('users/register/', views.UserCreateAPIView.as_view()),
     # path('posts/like/{pk}', views.PostingLikeCreateAPIView.as_view()),
     path('', include(router.urls)),
     # path('api-auth/', include('rest_framework.urls')),

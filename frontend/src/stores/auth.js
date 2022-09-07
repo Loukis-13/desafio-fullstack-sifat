@@ -37,7 +37,7 @@ export const useAuthStore = defineStore('auth', () => {
             })
     }
 
-    async function register(user) { await enter('http://localhost:8000/v1/users/register/', user) }
+    async function register(user) { await enter('http://localhost:8000/v1/users/', user) }
 
     async function login(user) { await enter(baseUrl, user) }
 

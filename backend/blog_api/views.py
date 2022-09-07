@@ -1,27 +1,21 @@
 from django.contrib.auth.models import User
-from rest_framework import viewsets, permissions, generics, status
+from rest_framework import viewsets, permissions, generics, status, mixins
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .permissions import IsOwnerOrReadOnly
 from .models import Posting
-from .serializers import UserRegisterSerializer, UserSerializer, PostingSerializer
+from .serializers import UserSerializer, PostingSerializer
 
 
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
+class UserViewSet(mixins.CreateModelMixin, viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-
-class UserCreateAPIView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserRegisterSerializer
     permission_classes = [permissions.AllowAny]
-    authentication_classes = []
 
-    def post(self, request, *args, **kwargs):
-        serializer = UserRegisterSerializer(data=request.data)
+    def create(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             user = serializer.create(serializer.validated_data)
             refresh = RefreshToken.for_user(user)
