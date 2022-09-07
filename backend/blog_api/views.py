@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import action
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .permissions import IsOwnerOrReadOnly
@@ -41,3 +41,13 @@ class PostingViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    @action(detail=True, methods=['get'])
+    def like(self, request, pk):
+        likes = self.get_object().likes
+        if likes.filter(id=request.user.id).exists():
+            likes.remove(request.user)
+        else:
+            likes.add(request.user)
+
+        return Response(status=status.HTTP_200_OK) 

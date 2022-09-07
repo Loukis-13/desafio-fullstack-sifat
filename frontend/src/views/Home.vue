@@ -10,16 +10,16 @@ const posts = usePostsStore()
 const message = ref('')
 
 function publicar() {
-  posts.postPost(message.value)
+  posts.post(message.value)
   message.value = ''
 }
 
 async function passPage(page) {
-  await posts.getPosts(page)
+  await posts.get(page)
   window.scrollTo(0, 0)
 }
 
-await posts.getPosts()
+await posts.get()
 </script>
 
 <template>
@@ -36,7 +36,7 @@ await posts.getPosts()
       </b-card-footer>
     </b-card>
 
-    <Post v-for="post in posts.posts.results" class="my-3" :post="post" :username="auth.username" :key="post.id" />
+    <Post v-for="post in posts.posts.results" class="my-3" :post="post" :username="auth.username" :isLogged="auth.logged" :key="post.id" />
 
     <div class="d-flex justify-content-center mb-3">
       <b-button v-if="posts.posts.previous" @click="passPage(posts.posts.previous)" variant="primary">

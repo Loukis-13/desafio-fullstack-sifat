@@ -11,6 +11,7 @@ router.register(r'posts', views.PostingViewSet)
 
 urlpatterns = [
     path('users/register/', views.UserCreateAPIView.as_view()),
+    # path('posts/like/{pk}', views.PostingLikeCreateAPIView.as_view()),
     path('', include(router.urls)),
     # path('api-auth/', include('rest_framework.urls')),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

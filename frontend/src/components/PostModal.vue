@@ -10,7 +10,7 @@ let show = ref(false)
 let message = ref(args.message)
 
 function editar() {
-    posts.putPost(args.url, message.value)
+    posts.put(args.url, message.value)
     show.value = false
 }
 </script>

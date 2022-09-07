@@ -17,6 +17,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ('url', 'username', 'email', 'posts')
 
+
 class UserRegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(allow_blank=False)
     password = serializers.CharField(write_only=True)
@@ -34,8 +35,9 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
 class PostingSerializer(serializers.HyperlinkedModelSerializer):
     username = serializers.ReadOnlyField(source='user.username')
+    likes = serializers.SlugRelatedField(many=True, slug_field='username', read_only=True)
 
     class Meta:
         model = Posting
-        fields = ('url', 'id', 'user', 'username', 'message', 'created_at', 'updated_at')
+        fields = ('url', 'id', 'user', 'username', 'likes', 'message', 'created_at', 'updated_at')
         read_only_fields = ('user',)
