@@ -3,6 +3,7 @@ import { capitalize } from 'vue';
 import { usePostsStore } from '../stores/posts'
 import PostModal from './PostModal.vue';
 import Confirm from './Confirm.vue';
+import ListUserLikes from './ListUserLikes.vue';
 
 const posts = usePostsStore()
 
@@ -46,10 +47,16 @@ function data(d) {
                         <b-icon-hand-thumbs-up v-else />
                         Like
                     </b-button>
-                    <b-button variant="outlined-primary" disabled>{{ post.likes.length }}</b-button>
+                    <list-user-likes :likes="post.likes">
+                        <template v-slot:activator="{ open }">
+                            <b-button variant="outline-primary" @click="open" :disabled="post.likes.length == 0">
+                                {{ post.likes.length }}
+                            </b-button>
+                        </template>
+                    </list-user-likes>
                 </b-button-group>
 
-                <small class="text-muted text-truncate" style="display: block;">
+                <small class="text-muted text-truncate my-auto">
                     Publicado em {{ data(post.created_at) }}
                     {{ +new Date(post.created_at) != +new Date(post.updated_at) ? `, editado em ${data(post.updated_at)}` : "" }}
                 </small>
