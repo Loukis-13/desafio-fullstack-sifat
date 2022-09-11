@@ -4,7 +4,7 @@ Blog com sistema CRUD, composto por Django Framework no backend e VueJS no Front
 
 O Blog possui um sistema de curtidas de cada post e criação/modificação/deleção de posts, sendo as duas funcionalidades feitas sem que haja atualização das páginas do sistema, por meio de chamadas assíncronas ao backend.  
 
-![](demo.mp4.mov)
+![](demo.gif)
 
 ## Front end
 Interface construída com [Vue.js](https://vuejs.org/) para componentização e [BootstrapVue 3](https://cdmoro.github.io/bootstrap-vue-3/) para estilização.  
